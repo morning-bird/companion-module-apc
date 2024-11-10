@@ -5,20 +5,9 @@ const {
     InstanceStatus,
     TCPHelper,
 } = require("@companion-module/base");
-const net = require("net");
 const { getActionDefinitions } = require("./actions");
 
 class HelvarInstance extends InstanceBase {
-    constructor(internal) {
-        super(internal);
-
-        // Inisialisasi konfigurasi default
-        this.config = {
-            host: "127.0.0.1",
-            port: 50000,
-        };
-    }
-
     // Konfigurasi untuk opsi modul
     getConfigFields() {
         return [
@@ -27,7 +16,6 @@ class HelvarInstance extends InstanceBase {
                 id: "host",
                 label: "Target IP",
                 width: 8,
-                default: this.config.host,
                 regex: Regex.IP,
             },
             {
@@ -35,7 +23,6 @@ class HelvarInstance extends InstanceBase {
                 id: "port",
                 label: "Target Port",
                 width: 4,
-                default: this.config.port,
                 regex: Regex.PORT,
                 min: 1,
                 max: 65535,
@@ -45,6 +32,7 @@ class HelvarInstance extends InstanceBase {
 
     async init(config) {
         this.config = config;
+        this.updateStatus(InstanceStatus.Ok);
         this.setActionDefinitions(getActionDefinitions(this));
         await this.configUpdated(config);
     }

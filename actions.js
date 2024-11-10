@@ -1,6 +1,6 @@
-import { Regex } from "@companion-module/base";
+const { Regex } = require("@companion-module/base");
 
-export function getActionDefinitions(self) {
+function getActionDefinitions(self) {
     return {
         recallScene: {
             name: "Recall Scene",
@@ -80,3 +80,5 @@ export function getActionDefinitions(self) {
         },
     };
 }
+
+module.exports = { getActionDefinitions };
