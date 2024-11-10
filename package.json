@@ -1,0 +1,13 @@
+{
+  "name": "companion-module-helvar",
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "renato.budiman07@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "@companion-module/base": "^1.11.1"
+  },
+  "devDependencies": {
+    "@companion-module/tools": "^2.1.0"
+  }
+}

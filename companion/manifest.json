@@ -1,0 +1,26 @@
+{
+    "id": "helvar",
+    "name": "Helvar",
+    "shortname": "Helvar",
+    "description": "Helvar",
+    "manufacturer": "Helvar",
+    "products": ["Helvar"],
+    "keywords": ["Helvar"],
+    "version": "0.0.1",
+    "license": "MIT",
+    "repository": "git+https://github.com/bitfocus/companion-module-fake-module.git",
+    "bugs": "https://github.com/bitfocus/companion-module-fake-module/issues",
+    "maintainers": [
+        {
+            "name": "Renato Budiman",
+            "email": "renato.budiman07@gmail.com"
+        }
+    ],
+    "legacyIds": [],
+    "runtime": {
+        "type": "node18",
+        "api": "nodejs-ipc",
+        "apiVersion": "0.0.1",
+        "entrypoint": "../index.js"
+    }
+}
