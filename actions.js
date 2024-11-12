@@ -67,8 +67,8 @@ function getActionDefinitions(self) {
                 ) {
                     return;
                 }
-                // const cmd = ">V:1,C:11,G:1234,B:5,S:6,F:3200#";
-                const cmd = ">V:1,C:190#";
+                const cmd = `>V:1,C:11,G:${group},B:${block},S:${scene},F:${fadeTime}#`;
+                // const cmd = ">V:1,C:190#";
                 const sendBuf = Buffer.from(cmd, "latin1");
                 self.log("debug", `Sending command: ${cmd}`);
                 if (self.socket !== undefined && self.socket.isConnected) {
