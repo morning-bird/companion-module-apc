@@ -6,8 +6,7 @@ module.exports = async function (self) {
         upsStatus: {
             name: "UPS Status",
             type: "boolean",
-            description:
-                "Menunjukkan status UPS outlet (Hijau = On, Merah = Off)",
+            description: "Green = On, Black = Off",
             options: [
                 {
                     type: "textinput",
@@ -20,32 +19,20 @@ module.exports = async function (self) {
                 },
             ],
             defaultStyle: {
-                bgcolor: combineRgb(255, 0, 0),
+                bgcolor: combineRgb(0, 255, 0),
                 color: combineRgb(255, 255, 255),
             },
-            callback: async (feedback) => {
-                const outlet = await self.parseVariablesInString(
+            callback: async (feedback, context) => {
+                const outlet = await context.parseVariablesInString(
                     feedback.options.outlet
                 );
                 try {
                     const state = await getUpsStatus(self, outlet);
-                    if (state === "On") {
-                        return {
-                            bgcolor: combineRgb(0, 255, 0), // Hijau
-                            color: combineRgb(0, 0, 0),
-                        };
-                    } else {
-                        return {
-                            bgcolor: combineRgb(255, 0, 0), // Merah
-                            color: combineRgb(255, 255, 255),
-                        };
-                    }
+                    self.log("info", `Outlet${outlet} state: ${state}`);
+                    return state === "On";
                 } catch (error) {
                     self.log("error", `Error getting UPS status: ${error}`);
-                    return {
-                        bgcolor: combineRgb(0, 0, 0),
-                        color: combineRgb(255, 255, 255),
-                    };
+                    return false;
                 }
             },
         },
@@ -64,18 +51,6 @@ module.exports = async function (self) {
                     self.getConstants().CMD_ERROR_VAR_NAME
                 );
                 return returnedError;
-            },
-        },
-        [self.getConstants().CMD_STATUS_ON]: {
-            name: "Command Status On",
-            type: "boolean",
-            Styles: {
-                bgcolor: combineRgb(0, 255, 0),
-                color: combineRgb(0, 0, 0),
-            },
-            description: "Feedback that will activate when the command is on",
-            callback: (feedback) => {
-                return true;
             },
         },
     });

@@ -3,8 +3,8 @@ const {
     Regex,
     runEntrypoint,
     InstanceStatus,
-    TCPHelper,
 } = require("@companion-module/base");
+
 const { getActionDefinitions } = require("./actions");
 const { Client } = require("ssh2");
 const { createAlgorithmsObjectForSSH2 } = require("./algorithms");
@@ -62,8 +62,9 @@ class ApcInstance extends InstanceBase {
     async init(config) {
         this.config = config;
         this.updateStatus(InstanceStatus.Ok);
+        feedbacks(this);
+        // this.setFeedbackDefinitions();
         this.setActionDefinitions(getActionDefinitions(this));
-        this.setFeedbackDefinitions(feedbacks(this));
         this.initSSH();
     }
 
@@ -91,7 +92,7 @@ class ApcInstance extends InstanceBase {
             port: this.config.port,
             username: this.config.username,
             password: this.config.password,
-            keepaliveInterval: 5000,
+            keepaliveInterval: 1000,
             keepaliveCountMax: 3,
             readyTimeout: 20000,
             algorithms: createAlgorithmsObjectForSSH2(0),
@@ -146,6 +147,7 @@ class ApcInstance extends InstanceBase {
                         if (outletMatch) {
                             const outletNumber = outletMatch[1];
                             const state = outletMatch[2];
+                            // this.checkFeedbacks("upsStatus");
                             this.log(
                                 "info",
                                 `Outlet${outletNumber} State: ${state}`
@@ -156,8 +158,8 @@ class ApcInstance extends InstanceBase {
                         this.log("error", "STDERR: " + data);
                     });
                 setTimeout(() => {
-                    stream.end("ups -os 1\n");
-                }, 100);
+                    stream.write("ups -os 1\n");
+                }, 500);
             });
             this.updateStatus(InstanceStatus.Ok);
         });

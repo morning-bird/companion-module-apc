@@ -46,7 +46,6 @@ async function getUpsStatus(self, outlet) {
                     /Outlet([\d]) State:\s*(\w+)/i
                 );
                 if (outletMatch) {
-                    self.checkFeedbacks("upsStatus");
                     const state = outletMatch[2];
                     resolve(state);
                 }
@@ -81,7 +80,10 @@ function getActionDefinitions(self) {
                 // hanya nyalakan bila memang sedang posisi mati
                 if (state === "Off") {
                     execCommand(self, `ups -o ${outlet} On`);
-                    self.log("debug", `Outlet${outlet} is turned Nn`);
+                    self.log("info", `Outlet${outlet} is turned On`);
+                    setTimeout(() => {
+                        self.checkFeedbacks("upsStatus");
+                    }, 500);
                 }
             },
         },
@@ -106,7 +108,10 @@ function getActionDefinitions(self) {
                 // hanya matikan bila memang sedang posisi nyala
                 if (state === "On") {
                     execCommand(self, `ups -o ${outlet} Off`);
-                    self.log("debug", `Outlet${outlet} is turned Off`);
+                    self.log("info", `Outlet${outlet} is turned Off`);
+                    setTimeout(() => {
+                        self.checkFeedbacks("upsStatus");
+                    }, 500);
                 }
             },
         },
