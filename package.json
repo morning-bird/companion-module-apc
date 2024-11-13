@@ -1,5 +1,5 @@
 {
-    "name": "companion-module-helvar",
+    "name": "companion-module-apc",
     "version": "0.0.1",
     "main": "index.js",
     "author": "renato.budiman07@gmail.com",
@@ -9,10 +9,11 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/morning-bird/companion-module-helvar.git"
+        "url": "git+https://github.com/morning-bird/companion-module-apc.git"
     },
     "dependencies": {
-        "@companion-module/base": "^1.11.1"
+        "@companion-module/base": "^1.11.1",
+        "ssh2": "^1.16.0"
     },
     "devDependencies": {
         "@companion-module/tools": "^2.1.0"
