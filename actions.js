@@ -46,6 +46,7 @@ async function getUpsStatus(self, outlet) {
                     /Outlet([\d]) State:\s*(\w+)/i
                 );
                 if (outletMatch) {
+                    self.checkFeedbacks("upsStatus");
                     const state = outletMatch[2];
                     resolve(state);
                 }
@@ -112,4 +113,4 @@ function getActionDefinitions(self) {
     };
 }
 
-module.exports = { getActionDefinitions };
+module.exports = { getActionDefinitions, getUpsStatus };

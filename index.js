@@ -8,6 +8,7 @@ const {
 const { getActionDefinitions } = require("./actions");
 const { Client } = require("ssh2");
 const { createAlgorithmsObjectForSSH2 } = require("./algorithms");
+const feedbacks = require("./feedbacks");
 
 const Constants = {
     CMD_ERROR_VAR_NAME: "returnedError",
@@ -62,6 +63,7 @@ class ApcInstance extends InstanceBase {
         this.config = config;
         this.updateStatus(InstanceStatus.Ok);
         this.setActionDefinitions(getActionDefinitions(this));
+        this.setFeedbackDefinitions(feedbacks(this));
         this.initSSH();
     }
 
